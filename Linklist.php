@@ -105,6 +105,26 @@ class Linklist
     }
 
     /**
+     * 查询等于指定值的节点
+     *
+     * @params mixed $value
+     * @return Linklist
+     *
+     * @time 2019-12-30
+     */
+    public function findByValue($value)
+    {
+        $pre = $this->head->next;
+        while($pre) {
+            if ($pre->value == $value) {
+                return $pre;
+            }
+
+            $pre = $pre->next;
+        }
+    }
+
+    /**
      * 删除指定位置的节点
      *
      * @params integer $index
@@ -128,21 +148,15 @@ class Linklist
     }
 
     /**
-     * 查询等于指定值的节点
-     *
-     * @params mixed $value
-     * @return Linklist
-     *
-     * @time 2019-12-30
+     * 删除指定值的节点
     */
-    public function findByValue($value)
+    public function deleteByValue($value)
     {
-        $pre = $this->head->next;
-        while($pre) {
+        $pre = $this->head;
+        while ($pre->next) {
             if ($pre->value == $value) {
-                return $pre;
+                $pre->next = $pre->next->next;
             }
-
             $pre = $pre->next;
         }
     }
@@ -153,20 +167,15 @@ class Linklist
      * @return string
      *
      * @time 2019-12-30
-    */
+     */
     public function LinklistToString()
     {
         $pre = $this->head->next;
-        while($pre) {
+        while ($pre) {
             $list[] = $pre->value;
             $pre = $pre->next;
         }
 
         return implode('->', $list);
     }
-
-    /**
-     * 删除指定值的节点
-    */
-    
 }
