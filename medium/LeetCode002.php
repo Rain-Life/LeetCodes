@@ -11,15 +11,14 @@ class ListNode
     }
 }
 
-class LeetCode0002
+class LeetCode002
 {
     /**
      * @param ListNode $l1
      * @param ListNode $l2
      * @return ListNode
      */
-    public function addTwoNumbers($l1, $l2)
-    {
+    function addTwoNumbers($l1, $l2) {
         if ($l1 == null && $l2 == null) {
             return null;
         }
@@ -45,10 +44,11 @@ class LeetCode0002
     }
 }
 
-$leetCode = new LeetCode0002();
+$leetCode = new LeetCode002();
 $l1 = new ListNode(2);
-$l1->next = new ListNode(5);
-$l2 = new ListNode(4);
+$l1->next = new ListNode(4);
+
+$l2 = new ListNode(5);
 $l2->next = new ListNode(6);
 
 $newList = $leetCode->addTwoNumbers($l1, $l2);
@@ -58,4 +58,4 @@ while ($newList != null) {
     $newList = $newList->next;
 }
 
-echo $str;
+echo PHP_EOL.$str.PHP_EOL;
