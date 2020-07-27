@@ -83,6 +83,14 @@ class LeetCode003
             }
         }
     }
+
+    /**
+     * 滑动窗口大小固定
+    */
+    public function huaDongFixed($arr, $width)
+    {
+
+    }
 }
 
 $obj = new LeetCode003();
