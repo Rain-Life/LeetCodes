@@ -41,6 +41,30 @@ class LeetCode003
     }
 
     /**
+     * 使用滑动窗口的方法
+    */
+    public function useHuaDong($s)
+    {
+        $len = strlen($s);
+        $right = $left = 0;//使用双指针实现
+        $targetStr = '';
+        $max = 0;//不重复字符串的最大长度
+
+        while ($right < $len) {
+            while ((strpos($targetStr, $s[$right]) === false) && $right < $len) {
+                $targetStr .= $s[$right];
+                $right ++;
+            }
+            $subLen = strlen($targetStr);
+            if ($subLen > $max) {
+                $max = $subLen;
+            }
+            unset($s[$left]);
+            $left++;
+        }
+    }
+
+    /**
      * 滑动窗口
      *
      * $s为给定的字符串
