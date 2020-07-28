@@ -51,17 +51,20 @@ class LeetCode003
         $max = 0;//不重复字符串的最大长度
 
         while ($right < $len) {
-            while ((strpos($targetStr, $s[$right]) === false) && $right < $len) {
+            while ($right < $len && (strpos($targetStr, $s[$right]) === false)) {
                 $targetStr .= $s[$right];
                 $right ++;
             }
-            $subLen = strlen($targetStr);
-            if ($subLen > $max) {
-                $max = $subLen;
+            if ($right < $len) {
+                $subLen = strlen($targetStr);
+                if ($subLen > $max) {
+                    $max = $subLen;
+                }
+                $targetStr = str_replace($s[$right], "", $targetStr);
             }
-            unset($s[$left]);
-            $left++;
         }
+
+        return $max;
     }
 
     /**
@@ -118,4 +121,5 @@ class LeetCode003
 }
 
 $obj = new LeetCode003();
-$obj->baoli("pwwkew");
+$res = $obj->useHuaDong("pwwkew");
+var_dump($res);
