@@ -10,7 +10,7 @@ class LeetCode003
      *
      * 时间复杂度：O(n^2)
      * 空间复杂度：O(n)
-    */
+     */
     public function baoli($s)
     {
         //找出所有无重复字符的子串
@@ -42,7 +42,7 @@ class LeetCode003
 
     /**
      * 使用滑动窗口的方法
-    */
+     */
     public function useHuaDong($s)
     {
         $len = strlen($s);
@@ -68,7 +68,7 @@ class LeetCode003
      *
      * $s为给定的字符串
      * $t为目标字符串
-    */
+     */
     public function huadong($s, $t)
     {
         $countT = strlen($t);
@@ -109,7 +109,7 @@ class LeetCode003
 
     /**
      * 滑动窗口大小固定
-    */
+     */
     public function huaDongFixed($arr, $width)
     {
 
