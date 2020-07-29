@@ -46,24 +46,20 @@ class LeetCode003
     public function useHuaDong($s)
     {
         $len = strlen($s);
-        $right = $left = 0;//使用双指针实现
-        $targetStr = '';
-        $max = 0;//不重复字符串的最大长度
-
-        while ($right < $len) {
-            while ($right < $len && (strpos($targetStr, $s[$right]) === false)) {
-                $targetStr .= $s[$right];
-                $right ++;
-            }
-            if ($right < $len) {
-                $subLen = strlen($targetStr);
-                if ($subLen > $max) {
-                    $max = $subLen;
-                }
-                $targetStr = str_replace($s[$right], "", $targetStr);
-            }
+        if ($len <= 1) {
+            return $len;
         }
-
+        $max = 0;
+        $hash = [];
+        $left = 0;
+        for ($right = 0; $right < $len; $right++) {
+            $char = substr($s, $right, 1);
+            if (isset($hash[$char])) {
+                $left = max($left, $hash[$char] + 1);
+            }
+            $hash[$char] = $right;
+            $max = max($max, $right - $left + 1);
+        }
         return $max;
     }
 
@@ -121,5 +117,5 @@ class LeetCode003
 }
 
 $obj = new LeetCode003();
-$res = $obj->useHuaDong("pwwkew");
+$res = $obj->useHuaDong("aabaab!bb");
 var_dump($res);
