@@ -15,25 +15,19 @@ class LeetCode003
     {
         //找出所有无重复字符的子串
         $len = strlen($s);
-        $arrStr = [];//存储所有的子串
+        if ($len <= 1) {
+            return $len;
+        }
+        $max = 0;
         for ($i=0; $i<$len; $i++) {
             $str = $s[$i];//临时存储所有不包含重复字符的子串
             for ($j=$i+1; $j<$len; $j++) {
                 if (strpos($str, $s[$j]) === false) {//验证字符是否在指定字符串中出现过
                     $str .= $s[$j];
                 } else {
-                    $arrStr[] = $str;
+                    $max = max($max, strlen($str));
                     break;
                 }
-            }
-        }
-
-        $max = 0;
-        //求出所有子串中最大的长度
-        for ($k=0; $k<count($arrStr); $k++) {
-            $strLen = strlen($arrStr[$k]);
-            if ($strLen > $max) {
-                $max = $strLen;
             }
         }
 
@@ -117,5 +111,5 @@ class LeetCode003
 }
 
 $obj = new LeetCode003();
-$res = $obj->useHuaDong("aabaab!bb");
+$res = $obj->baoli("ab");
 var_dump($res);
