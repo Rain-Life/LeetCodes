@@ -13,22 +13,22 @@ class LeetCode003
      */
     public function baoli($s)
     {
-        //找出所有无重复字符的子串
         $len = strlen($s);
-        if ($len <= 1) {
+        if ($len <=1) {
             return $len;
         }
         $max = 0;
+
         for ($i=0; $i<$len; $i++) {
-            $str = $s[$i];//临时存储所有不包含重复字符的子串
-            for ($j=$i+1; $j<$len; $j++) {
-                if (strpos($str, $s[$j]) === false) {//验证字符是否在指定字符串中出现过
+            $str = '';
+            for ($j=$i; $j<$len; $j++) {
+                if (strpos($str, $s[$j]) === false) {
                     $str .= $s[$j];
-                } else {
-                    $max = max($max, strlen($str));
-                    break;
+                    continue;
                 }
+                break;
             }
+            $max = max($max, strlen($str));
         }
 
         return $max;
@@ -111,5 +111,5 @@ class LeetCode003
 }
 
 $obj = new LeetCode003();
-$res = $obj->baoli("ab");
+$res = $obj->baoli("");
 var_dump($res);
