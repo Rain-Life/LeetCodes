@@ -29,7 +29,9 @@
 
 PHP代码实现：
 ```
-$len = strlen($s);
+public function lengthOfLongestSubstringForce($s)
+    {
+        $len = strlen($s);
         if ($len <=1) {
             return $len;
         }
@@ -48,6 +50,7 @@ $len = strlen($s);
         }
 
         return $max;
+    }
 ```
 
 
@@ -70,4 +73,57 @@ $len = strlen($s);
 
 最后一步没有画，因为最后一个元素w在窗口中，所以将窗口中w及之前的元素从窗口中移除
 
+C代码实现：
+```
+int lengthOfLongestSubstringWindow(char *s)
+{
+    int index[128] = {0};//记录s中每一个字符在s中的位置
+    int left =0, max=0, count=0;
+    int i;
+    for (i=0; s[i]!='\0'; i++)
+    {
+        if(index[s[i]] > left)
+        {
+            count = i-left;
+            left = index[s[i]];
+            if(count > max)
+            {
+                max = count;
+            }
+        }
+        index[s[i]] = i+1;
+    }
 
+    count = i-left;
+    if(count > max)
+    {
+        max = count;
+    }
+
+    return max;
+}
+```
+
+
+PHP代码实现：
+```
+public function lengthOfLongestSubstringWindow($s)
+    {
+        $len = strlen($s);
+        if ($len <= 1) {
+            return $len;
+        }
+        $max = 0;
+        $hash = [];
+        $left = 0;
+        for ($right = 0; $right < $len; $right++) {
+            $char = substr($s, $right, 1);
+            if (isset($hash[$char])) {
+                $left = max($left, $hash[$char] + 1);
+            }
+            $hash[$char] = $right;
+            $max = max($max, $right - $left + 1);
+        }
+        return $max;
+    }
+```

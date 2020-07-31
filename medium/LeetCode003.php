@@ -11,7 +11,7 @@ class LeetCode003
      * 时间复杂度：O(n^2)
      * 空间复杂度：O(n)
      */
-    public function baoli($s)
+    public function lengthOfLongestSubstringForce($s)
     {
         $len = strlen($s);
         if ($len <=1) {
@@ -37,7 +37,7 @@ class LeetCode003
     /**
      * 使用滑动窗口的方法
      */
-    public function useHuaDong($s)
+    public function lengthOfLongestSubstringWindow($s)
     {
         $len = strlen($s);
         if ($len <= 1) {
