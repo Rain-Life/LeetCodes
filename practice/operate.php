@@ -96,3 +96,140 @@ function lockFwrite($str) {
     fclose($fp);
 }
 
+/**
+ * 写一个函数，尽可能高效的，从一个标准url里取出文件的扩展名，例如:
+http://www.sina.com.cn/abc/de/fg.php?id=1需要取出php或.php（新浪）
+*/
+function getExtl($url) {
+    $arr = parse_url($url);
+    $file = basename($arr['path']);
+    $ext = explode('.', $file);
+
+    return $ext[count($ext)-1];
+}
+
+//var_dump(getExtl("http://www.sina.com.cn/abc/de/fg.php?id=1"));
+
+/**
+ * 写一个函数，能够遍历一个文件夹下的所有文件和子文件夹。（新浪）
+*/
+function my_scandir($dir){
+
+    $files = array();
+
+    if(is_dir($dir)){
+        if ($handle = opendir($dir)) {
+
+            while (($file = readdir($handle))!== false) {
+
+                if ($file!="." && $file!="..") {
+
+                    if (is_dir($dir."/".$file)) {
+
+                        $files[$file] = my_scandir($dir."/".$file);
+
+                    } else {
+
+                        $files[] = $dir."/".$file;
+
+                    }
+
+                }
+
+            }
+            closedir($handle);
+            return $files;
+        }
+
+    }
+
+}
+
+/**
+ * 实现无限极分类
+*/
+function tree($arr,$pid=0,$level=0){
+    static $list = array();
+    foreach ($arr as $v) {
+        //如果是顶级分类，则将其存到$list中，并以此节点为根节点，遍历其子节点
+        if ($v['parent_id'] == $pid) {
+            $v['level'] = $level;
+            $list[] = $v;
+            tree($arr,$v['cat_id'],$level+1);
+        }
+    }
+
+    return $list;
+}
+
+
+/**
+ * 写一个函数，算出两个文件的相对路径，如b='/a/b/12/34/c.php';计算出a的相对路径应该是../../c/d（新浪）
+*/
+
+function releative_path($path1,$path2){
+    $arr1 = explode("/",dirname($path1));
+    $arr2 = explode("/",dirname($path2));
+    //var_dump(dirname($path1), dirname($path2), $arr1, $arr2);
+    for ($i=0,$len = count($arr2); $i < $len; $i++) {
+        if ($arr1[$i]!=$arr2[$i]) {
+            break;
+        }
+    }
+    //var_dump($i);exit;
+    // 不在同一个根目录下
+    if ($i==1) {
+        $return_path = array();
+    }
+    // 在同一个根目录下
+    if ($i != 1 && $i < $len) {
+        $return_path = array_fill(0, $len - $i,"..");
+    }
+    // 在同一个目录下
+    if ($i == $len) {
+        $return_path = array('./');
+    }
+
+    $return_path = array_merge($return_path,array_slice($arr1,$i));
+    return implode('/',$return_path);
+
+}
+
+$a = '/a/b/c/d/e.php';
+
+$b = '/a/b/12/34/c.php';
+
+$c = '/e/b/c/d/f.php';
+
+$d = '/a/b/c/d/g.php';
+
+
+
+//echo releative_path($a,$b);//结果是../../c/d
+//
+//echo "<br />";
+//
+//echo releative_path($a,$c);//结果是a/b/c/d
+//
+//echo "<br />";
+//
+//echo releative_path($a,$d);//结果是./
+//
+//echo "<br />";
+
+
+/**
+ * 编写函数取得上一月的最后一天
+*/
+function getLastMonthLastDay($date) {
+    if ($date != '') {
+        $time = strtotime($date);
+    } else {
+        $time = time();
+    }
+
+    $day = date('j', $time);//获取该日期是当前月的第几天
+    return date('Y-m-d',strtotime("-{$day} days", $time));
+}
+
+var_dump(getLastMonthLastDay('2020-03-11'));
