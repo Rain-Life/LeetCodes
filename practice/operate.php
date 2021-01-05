@@ -232,4 +232,128 @@ function getLastMonthLastDay($date) {
     return date('Y-m-d',strtotime("-{$day} days", $time));
 }
 
-var_dump(getLastMonthLastDay('2020-03-11'));
+//var_dump(getLastMonthLastDay('2020-03-11'));
+
+
+function yinYong() {
+//    $a = range(0, 3);
+//    xdebug_debug_zval('a');
+    //定义变量b，将a的值赋给b
+    //$b = $a;//此时看内存空间应该是下图那样（当没有对$a或$b进行修改的时候，是不会再复制一块空间出来的，这叫写时复制Copy on write）
+
+//    $a = array( 'one' );
+//    $a[] =& $a;
+//    xdebug_debug_zval( 'a' );
+
+    $a = 'new string';
+    $b = 1;
+    xdebug_debug_zval('a');
+    xdebug_debug_zval('b');
+}
+
+//yinYong();
+
+function gcTest() {
+    $a = 'hello'; // $a -> zend_string
+    xdebug_debug_zval('a');
+    $b = $a; // $b,$a -> zend_string
+
+    xdebug_debug_zval('a');
+    xdebug_debug_zval('b');
+
+    $c = &$b; // $c,$b -> zval(type = IS_REFERENCE, refcount = 2) -> zend_string
+    xdebug_debug_zval('b');
+    xdebug_debug_zval('c');
+}
+
+//gcTest();
+
+//$a = "aabbzz"; $a++; echo $a;
+
+
+//$a = [
+//    'string' => 'life',
+//    'object' => new stdClass()
+//];
+//
+//xdebug_debug_zval('a');
+//echo PHP_EOL;
+//
+//$c = &$a['string'];
+//xdebug_debug_zval('a');
+//echo PHP_EOL;
+//
+//$b = $a['object'];
+//xdebug_debug_zval('a');
+//echo PHP_EOL;
+//
+//$d = $b;
+//
+//xdebug_debug_zval('a');
+//echo PHP_EOL;
+//
+//$c = 'new lift';
+//
+//xdebug_debug_zval('a');
+//echo PHP_EOL;
+//
+//unset($c);
+//xdebug_debug_zval('a');var_dump($a['string']);
+//echo PHP_EOL;
+
+
+//$a = 1;
+//$b = 2;
+//function Sum()
+//{
+//    global $a, $b; //在里面声明为全局变量
+//    $b = $a + $b;
+//}
+//Sum();
+//echo $b;
+//
+//$var1 = "111";
+//$var2 = "";
+//$var2 = &$var1;
+//var_dump($var2);
+
+//$var1 = "Example variable";
+//$var2 = "";
+//
+//function test($flag) {
+//    global $var1,$var2;
+//    if (!$flag) {
+//        $var2 = &$var1;
+//    } else {
+//        $GLOBALS["var2"] = &$var1;
+//    }
+//}
+//
+//test(false);
+//var_dump($var2);
+//$var2 = 'new var';
+//test(true);
+//var_dump($var1,$var2);
+
+
+class A {
+    private static $instance;
+    private function __construct()
+    {
+
+    }
+
+    private function __clone()
+    {
+        // TODO: Implement __clone() method.
+    }
+
+    public function getInstance() {
+        if (!(self::$instance instanceof self)) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+}
+
